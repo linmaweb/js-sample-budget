@@ -7,11 +7,12 @@ import {
   text,
   amount,
   history,
-  localStorageTransactions,
 } from "./variables";
 
 let transactions =
-  localStorage.getItem("transactions") !== null ? localStorageTransactions : [];
+  localStorage.getItem("transactions") !== null ? 
+  JSON.parse(localStorage.getItem("transactions")) : 
+  [];
 
 const addTransaction = (e) => {
   e.preventDefault();
@@ -37,9 +38,9 @@ const addTransactionDOM = (transaction) => {
   const item = document.createElement("li");
   item.classList.add(transaction.amount < 0 ? "minus" : "plus");
   item.innerHTML = `
-    ${transaction.text} <span>${sign}${Math.abs(
-    transaction.amount
-  )}</span> <button class="delete-btn" id="${transaction.id}">x</button>
+    ${transaction.text} 
+    <span>${sign}${Math.abs(transaction.amount)}</span> 
+    <button class="delete-btn" id="${transaction.id}">x</button>
   `;
   list.appendChild(item);
 };
@@ -52,9 +53,11 @@ const updateValues = () => {
     .reduce((acc, item) => (acc += item), 0)
     .toFixed(2);
   const expense = (
-    amounts.filter((item) => item < 0).reduce((acc, item) => (acc += item), 0) *
-    -1
-  ).toFixed(2);
+    amounts
+    .filter((item) => item < 0)
+    .reduce((acc, item) => (acc += item), 0) * -1
+    )
+    .toFixed(2);
   const delete_btns = document.querySelectorAll(".delete-btn");
   balance.innerText = `$${total}`;
   money_plus.innerText = `$${income}`;

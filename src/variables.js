@@ -7,10 +7,6 @@ const text = document.getElementById("text");
 const amount = document.getElementById("amount");
 const history = document.getElementById("history");
 
-const localStorageTransactions = JSON.parse(
-  localStorage.getItem("transactions")
-);
-
 export {
   balance,
   money_plus,
@@ -19,6 +15,5 @@ export {
   form,
   text,
   amount,
-  history,
-  localStorageTransactions,
+  history
 };
